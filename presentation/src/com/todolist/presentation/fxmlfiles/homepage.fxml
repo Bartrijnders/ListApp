@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.todolist.presentation.controllers.HomePageController">
+   <children>
+      <BorderPane fx:id="layoutpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0">
+         <left>
+            <TreeView fx:id="contentTreeview" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </left>
+         <top>
+            <DatePicker fx:id="datePicker" prefWidth="600.0" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <ScrollPane fx:id="overview_ScrollPane" fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="501.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+               <content>
+                  <VBox fx:id="viewVbox" prefWidth="398.0" spacing="10.0">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></VBox>
+               </content>
+            </ScrollPane>
+         </center>
+         <bottom>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <items>
+                <Button fx:id="newTaskButton" mnemonicParsing="false" text="New Task" />
+                  <Button fx:id="newFolderButton" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="New Folder" />
+              </items>
+            </ToolBar>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
