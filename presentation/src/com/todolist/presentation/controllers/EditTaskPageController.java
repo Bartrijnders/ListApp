@@ -1,8 +1,6 @@
 package com.todolist.presentation.controllers;
 
-import com.todolist.domain.factorys.TaskFactory;
 import com.todolist.domain.interfaces.ITask;
-import com.todolist.logic.todolistlogic.DateFormatter;
 import com.todolist.logic.todolistlogic.LocalDateToDateConV;
 import com.todolist.presentation.alerts.ReqInfoAlert;
 import javafx.event.ActionEvent;
@@ -15,14 +13,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class EditTaskPageController implements Initializable {
 
 
-    static ITask answer;
+    private ITask answer;
     private ITask workTask;
 
     @FXML
@@ -48,7 +44,7 @@ public class EditTaskPageController implements Initializable {
 
     @FXML
     public void handleConfirmButtonAction(ActionEvent event){
-        if(!checkNotEmpty()){
+        if(Boolean.FALSE.equals(checkNotEmpty())){
             ReqInfoAlert.show(missingInfoBuilder());
 
         }
@@ -70,9 +66,7 @@ public class EditTaskPageController implements Initializable {
     }
 
     public void initComponents(){
-        cancelButton.setOnAction(e -> {
-            handleCloseButtonAction(e);
-        });
+        cancelButton.setOnAction(e -> handleCloseButtonAction(e));
 
         titleTextField.setPromptText("Vul hier uw titel in");
         confirmButton.setOnAction(e -> handleConfirmButtonAction(e));
@@ -84,11 +78,7 @@ public class EditTaskPageController implements Initializable {
     }
 
     public Boolean checkNotEmpty(){
-        if(titleTextField.getText().isEmpty() || datePicker.getValue() == null) {
-            return false;
-        }else{
-            return true;
-        }
+        return  !titleTextField.getText().isEmpty();
     }
 
     public String missingInfoBuilder(){
