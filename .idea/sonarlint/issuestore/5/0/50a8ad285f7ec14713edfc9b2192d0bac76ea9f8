@@ -1,0 +1,14 @@
+
+<squid:S2116v"%Use "Arrays.toString(array)" instead.(Ϊς
+O
+squid:S106u"9Replace this use of System.out or System.err by a logger.(Ώ΄Λη
+[squid:S1854–">Remove this useless assignment to local variable "folderMenu".(έρΐύÿÿÿÿ
+Dsquid:S1604L"(Make this anonymous inner class a lambda(τ―ύÿÿÿÿ
+T
+squid:S106t"9Replace this use of System.out or System.err by a logger.(ύ™ψψÿÿÿÿ
+Lsquid:S1481–"/Remove this unused "folderMenu" local variable.(έρΐύÿÿÿÿ
+T
+squid:S106I"9Replace this use of System.out or System.err by a logger.(ό„σÿÿÿÿÿ
+?squid:S1604V"(Make this anonymous inner class a lambda(Χρ„’
+O
+squid:S106v"9Replace this use of System.out or System.err by a logger.(Ϊς

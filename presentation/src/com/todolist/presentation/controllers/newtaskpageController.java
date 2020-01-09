@@ -4,24 +4,17 @@ import com.todolist.domain.factorys.TaskFactory;
 import com.todolist.domain.interfaces.IFolder;
 import com.todolist.domain.interfaces.ITask;
 import com.todolist.logic.folderlogic.TaskToFolderAdder;
-import com.todolist.logic.todolistlogic.LocalDateToDateConV;
+import com.todolist.logic.operations.LocalDateToDateConV;
 import com.todolist.presentation.alerts.ReqInfoAlert;
-import com.todolist.presentation.eventHandlers.newtaskpage.CancelButtonEvent;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import javax.swing.text.StyledEditorKit;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class newtaskpageController implements Initializable {

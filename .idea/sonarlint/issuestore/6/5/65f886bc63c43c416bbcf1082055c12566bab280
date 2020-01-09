@@ -1,0 +1,16 @@
+
+Tsquid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ
+asquid:UselessImportCheck"=Remove this unused import 'javax.swing.text.StyledEditorKit'.(ùÄÀ
+jsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(æ·¸öşÿÿÿÿ
+Osquid:UselessImportCheck"+Remove this unused import 'java.util.Date'.(¸…¼ü
+Hsquid:S1612Q",Replace this lambda with a method reference.(ÆÓ¼ıÿÿÿÿ
+Rsquid:UselessImportCheck".Remove this unused import 'javafx.scene.Node'.(ÑÖ¬ï
+Hsquid:S1602Q",Remove useless curly braces around statement(ÆÓ¼ıÿÿÿÿ
+Qsquid:UselessImportCheck"-Remove this unused import 'java.time.ZoneId'.( Æ½“
+Csquid:S1612V",Replace this lambda with a method reference.(à¶Ù…
+Rsquid:S2696="6Make the enclosing method "static" or remove this set.(ûñ¤İÿÿÿÿÿ
+Fsquid:S54118"*Use the primitive boolean expression here.(êé ‹ùÿÿÿÿ
+‹squid:UselessImportCheck	"bRemove this unused import 'com.todolist.presentation.eventHandlers.newtaskpage.CancelButtonEvent'.(’ôÆ³úÿÿÿÿ
+Vsquid:UselessImportCheck
+"3Remove this unused import 'javafx.concurrent.Task'.(Úåôg
+]squid:S1126_"AReplace this if-then-else statement by a single return statement.(«¤èƒúÿÿÿÿ

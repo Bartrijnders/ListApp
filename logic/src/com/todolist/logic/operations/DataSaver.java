@@ -1,4 +1,4 @@
-package com.todolist.logic.todolistlogic;
+package com.todolist.logic.operations;
 
 import com.todolist.dataacces.filedatehandlers.FileDataSaver;
 import com.todolist.dataacces.filedatehandlers.IDataSaver;

@@ -1,0 +1,5 @@
+
+squid:S1319D"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(×ƒ‰ë8ÊÕ´ø-
+’squid:S1319@"oThe type of the "list" object should be an interface such as "List" rather than the implementation "ArrayList".(‚¿Ëìùÿÿÿÿ8‘²Õ´ø-
+Zsquid:UselessImportCheck	"7Remove this unused import 'javafx.scene.control.Alert'.(ÊÇê:
+dsquid:S00101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ü­‹!

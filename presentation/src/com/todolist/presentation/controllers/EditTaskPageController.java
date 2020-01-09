@@ -1,7 +1,7 @@
 package com.todolist.presentation.controllers;
 
 import com.todolist.domain.interfaces.ITask;
-import com.todolist.logic.todolistlogic.LocalDateToDateConV;
+import com.todolist.logic.operations.LocalDateToDateConV;
 import com.todolist.presentation.alerts.ReqInfoAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,6 +39,7 @@ public class EditTaskPageController implements Initializable {
 
     @FXML
     public void handleCloseButtonAction(ActionEvent event) {
+        answer = workTask;
         close();
     }
 

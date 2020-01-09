@@ -3,27 +3,24 @@ package com.todolist.presentation.controllers;
 import com.todolist.domain.factorys.FolderFactory;
 import com.todolist.domain.interfaces.IFolder;
 import com.todolist.domain.interfaces.ITask;
-import com.todolist.logic.todolistlogic.*;
+import com.todolist.logic.operations.*;
 import com.todolist.presentation.components.TaskComponent;
+import com.todolist.presentation.controlBehavior.viewBox.ViewBoxInitBehavior;
 import com.todolist.presentation.eventHandlers.homepage.NewFolderButtonEvent;
 import com.todolist.presentation.eventHandlers.homepage.NewTaskButtonEvent;
 import com.todolist.presentation.main.Main;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HomePageController implements Initializable {
@@ -41,28 +38,19 @@ public class HomePageController implements Initializable {
     private Button newTaskButton;
     @FXML
     private Button newFolderButton;
-    @FXML
-    private Button newLabelButton;
-    @FXML
-    private AnchorPane anchorPane;
 
     private ArrayList<IFolder> list;
 
-    private IFolder rootFolder;
+    private IFolder activeFolder;
 
-    private ITask task;
-
-    private IFolder folder;
-
-    private MultipleSelectionModel multipleSelectionModel;
+    private MultipleSelectionModel<TreeItem<IFolder>> multipleSelectionModel;
 
     private DataSaver dataSaver;
-    private DataLoader dataLoader;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dataSaver = new DataSaver();
-        dataLoader = new DataLoader();
+        DataLoader dataLoader = new DataLoader();
         list = dataLoader.loadFromFile();
         fillInData();
         shapeVbox();
@@ -70,11 +58,12 @@ public class HomePageController implements Initializable {
         setActionListenerTreeview();
         multipleSelectionModel = contentTreeview.getSelectionModel();
         multipleSelectionModel.select(0);
+        activeFolder = (multipleSelectionModel.getSelectedItem()).getValue();
         contentTreeview.requestFocus();
-        getItems(LocalDateToDateConV.convertToDate(datePicker.getValue()),rootFolder);
-        newTaskButton.setOnAction(e -> handleNewButton(e));
-        newFolderButton.setOnAction(e -> handleNewFolderButton(e));
-        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> getItems(LocalDateToDateConV.convertToDate(newValue), rootFolder));
+        getItems(LocalDateToDateConV.convertToDate(datePicker.getValue()));
+        newTaskButton.setOnAction(this::handleNewButton);
+        newFolderButton.setOnAction(this::handleNewFolderButton);
+        datePicker.valueProperty().addListener((observable, oldValue, newValue) -> getItems(LocalDateToDateConV.convertToDate(newValue)));
         Main.getPs().setOnCloseRequest(e->dataSaver.saveToFile(list));
 
     }
@@ -89,19 +78,19 @@ public class HomePageController implements Initializable {
         datePicker.setValue(LocalDate.now());
     }
 
-    public void getItems(Date date, IFolder rootFolder){
+    public void getItems(Date date){
         TaskGetterDate taskGetterDate = new TaskGetterDate();
         ArrayList<ITask> worklist;
         TreeItem<IFolder> treeItem;
-        treeItem = (TreeItem<IFolder>) multipleSelectionModel.getSelectedItem();
-        if(treeItem != null && treeItem.getValue() !=rootFolder){
+        treeItem = multipleSelectionModel.getSelectedItem();
+        if(treeItem != null && treeItem.getValue() != contentTreeview.getRoot().getValue()){
             worklist = taskGetterDate.getTaskByDate(getSelectedFolder(multipleSelectionModel), date);
+            activeFolder = treeItem.getValue();
             viewVbox.getChildren().clear();
             if(!worklist.isEmpty())
                 for(ITask task : worklist){
-                    TaskComponent taskComponent = new TaskComponent(task, this);
-                    taskComponent.setFolder(treeItem.getValue());
-                    viewVbox.getChildren().addAll(taskComponent.getLayout());
+                    TaskComponent taskComponent = new TaskComponent(task);
+                    viewVbox.getChildren().addAll(taskComponent);
                 }
         }
         else {
@@ -110,45 +99,48 @@ public class HomePageController implements Initializable {
             viewVbox.getChildren().clear();
             if(!worklist.isEmpty())
                 for(ITask task : worklist){
-                    TaskComponent taskComponent = new TaskComponent(task, this);
-                    taskComponent.setFolder(rootFolder);
-                    viewVbox.getChildren().addAll(taskComponent.getLayout());
+                    TaskComponent taskComponent = new TaskComponent(task);
+                    viewVbox.getChildren().addAll(taskComponent);
                 }
         }
+        ViewBoxInitBehavior viewBoxInitBehavior = new ViewBoxInitBehavior();
+        viewBoxInitBehavior.initBehavior(viewVbox,this);
     }
 
     public void getTreeviewContent(){
-        //root branch
         contentTreeview.setRoot(null);
-        boolean check = false;
-        rootFolder = FolderFactory.create("FOLDERS");
+        Optional<IFolder> stream = list.stream().filter(x -> x.getTitle().toUpperCase().matches("FOLDERS")).findFirst();
+        if(stream.isPresent()){
+            setRootFolder(stream.get());
+            for(IFolder folder : list){
+                if(!folder.getTitle().matches(contentTreeview.getRoot().getValue().getTitle())){
+                    TreeItem<IFolder> treeItem = new TreeItem<>(folder);
+                    contentTreeview.getRoot().getChildren().add(treeItem);
+                }
+            }
+        }
+        else {
+            IFolder rootFolder = FolderFactory.create("FOLDERS");
+            list.add(rootFolder);
+            setRootFolder(rootFolder);
+        }
+
+    }
+
+    public void setRootFolder(IFolder rootFolder){
         TreeItem<IFolder> root;
         root = new TreeItem<>(rootFolder);
         root.setExpanded(true);
         contentTreeview.setRoot(root);
-
-        //folders branch
-        if(!list.isEmpty()){
-            for(IFolder folder : list){
-                    TreeItem<IFolder> treeItem = new TreeItem<>(folder);
-                    root.getChildren().add(treeItem);
-            }
-        }
-
     }
 
-    public TreeItem<String> makeBranch(String name, TreeItem<String> parent){
-        TreeItem<String> item = new TreeItem<>(name);
-        parent.getChildren().add(item);
-        return item;
-    }
 
     public void handleNewButton(ActionEvent e){
         NewTaskButtonEvent newTaskButtonEvent = new NewTaskButtonEvent();
-        task = newTaskButtonEvent.handleClick(e, getSelectedFolder(multipleSelectionModel));
+        ITask task = newTaskButtonEvent.handleClick(e, getSelectedFolder(multipleSelectionModel));
         if(task != null){
             dataSaver.saveToFile(list);
-            getItems(LocalDateToDateConV.convertToDate(datePicker.getValue()),rootFolder);
+            getItems(LocalDateToDateConV.convertToDate(datePicker.getValue()));
         }
 
     }
@@ -156,7 +148,7 @@ public class HomePageController implements Initializable {
 
     public void handleNewFolderButton(ActionEvent e){
         NewFolderButtonEvent newfolderbuttonevent = new NewFolderButtonEvent();
-        folder = newfolderbuttonevent.handleClick(e, list);
+        IFolder folder = newfolderbuttonevent.handleClick(e, list);
         if (folder != null) {
             list.add(folder);
             dataSaver.saveToFile(list);
@@ -165,28 +157,27 @@ public class HomePageController implements Initializable {
 
     }
 
-    public IFolder getSelectedFolder(MultipleSelectionModel multipleSelectionModel){
-        TreeItem<IFolder> selectedItem = (TreeItem<IFolder>)multipleSelectionModel.getSelectedItem();
+    public IFolder getSelectedFolder(MultipleSelectionModel<TreeItem<IFolder>> multipleSelectionModel){
+        TreeItem<IFolder> selectedItem = multipleSelectionModel.getSelectedItem();
         if(selectedItem == null){
 
             selectedItem = contentTreeview.getRoot();
             contentTreeview.requestFocus();
         }
-        IFolder folder = selectedItem.getValue();
-        return folder;
+        return selectedItem.getValue();
     }
 
 
     public void setActionListenerTreeview(){
-        contentTreeview.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<IFolder>>() {
-            @Override
-            public void changed(ObservableValue<? extends TreeItem<IFolder>> observable, TreeItem<IFolder> oldValue, TreeItem<IFolder> newValue) {
-                getItems(LocalDateToDateConV.convertToDate(datePicker.getValue()), rootFolder);
-            }
-        });
+        contentTreeview.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> getItems(LocalDateToDateConV.convertToDate(datePicker.getValue())));
     }
 
+    public void refresh(){
+        getItems(LocalDateToDateConV.convertToDate(datePicker.getValue()));
+        getTreeviewContent();
+    }
 
-
-
+    public IFolder getActiveFolder() {
+        return activeFolder;
+    }
 }

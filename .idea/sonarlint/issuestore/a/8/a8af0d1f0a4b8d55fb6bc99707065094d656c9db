@@ -1,0 +1,6 @@
+
+squid:S1319
+"rThe type of the "folders" object should be an interface such as "List" rather than the implementation "ArrayList".(¸Šîò8¦Ä™¸ø-
+squid:S1319
+"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(¸Šîò8¦Ä™¸ø-
+Isquid:S1168"+Return an empty collection instead of null.(¥¹ï8ôºš¸ø-

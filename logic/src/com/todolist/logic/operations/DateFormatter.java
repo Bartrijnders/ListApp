@@ -1,4 +1,4 @@
-package com.todolist.logic.todolistlogic;
+package com.todolist.logic.operations;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

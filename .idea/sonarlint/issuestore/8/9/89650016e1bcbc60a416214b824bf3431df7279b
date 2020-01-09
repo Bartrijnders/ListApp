@@ -1,0 +1,15 @@
+
+Msquid:S1481{"*Remove this unused "check" local variable.(’¼Œ‹øÿÿÿÿ8¥€ï·ø-
+Zsquid:UselessImportCheck"6Remove this unused import 'java.awt.event.MouseEvent'.(›õ
+dsquid:HiddenFieldCheck¯":Rename "folder" which hides the field declared at line 55.(°œ»¤8¥€ï·ø-
+isquid:HiddenFieldCheck„":Rename "folder" which hides the field declared at line 55.(Ø™Ôƒşÿÿÿÿ8¥€ï·ø-
+fsquid:HiddenFieldChecke"8Rename "task" which hides the field declared at line 53.(Ç¡äıÿÿÿÿ8¥€ï·ø-
+}squid:S1488¯"^Immediately return this expression instead of assigning it to the temporary variable "folder".(°œ»¤8¥€ï·ø-
+osquid:S14505"SRemove the "task" field and declare it as a local variable in the relevant methods.(œËï¦ÿÿÿÿÿ
+Csquid:S1612K",Replace this lambda with a method reference.(áß‰ı
+Xsquid:UselessImportCheck"/Remove this unused import 'javafx.stage.Stage'.(æÄ¸²úÿÿÿÿ
+Gsquid:S1604µ"(Make this anonymous inner class a lambda(òš8¥€ï·ø-
+|squid:S1450<"YRemove the "dataLoader" field and declare it as a local variable in the relevant methods.(ˆÙ»íüÿÿÿÿ8¸î·ø-
+fsquid:HiddenFieldCheckp"8Rename "task" which hides the field declared at line 53.(Ç¡äıÿÿÿÿ8†ŞÏ¸ø-
+qsquid:S14507"URemove the "folder" field and declare it as a local variable in the relevant methods.(‡±Ÿëûÿÿÿÿ
+Jsquid:S1612L",Replace this lambda with a method reference.(Ò–¥Ì8¥€ï·ø-

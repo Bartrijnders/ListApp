@@ -1,4 +1,4 @@
-package com.todolist.logic.todolistlogic;
+package com.todolist.logic.operations;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
