@@ -5,7 +5,7 @@ import com.todolist.domain.interfaces.IFolder;
 import com.todolist.domain.interfaces.ITask;
 import com.todolist.logic.operations.*;
 import com.todolist.presentation.components.TaskComponent;
-import com.todolist.presentation.controlBehavior.viewBox.ViewBoxInitBehavior;
+import com.todolist.presentation.controlbehavior.viewBox.ViewBoxInitBehavior;
 import com.todolist.presentation.eventHandlers.homepage.NewFolderButtonEvent;
 import com.todolist.presentation.eventHandlers.homepage.NewTaskButtonEvent;
 import com.todolist.presentation.main.Main;
@@ -16,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,10 +23,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class HomePageController implements Initializable {
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    Date date = new Date();
-
-
     @FXML
     private TreeView<IFolder> contentTreeview;
     @FXML
@@ -40,8 +35,6 @@ public class HomePageController implements Initializable {
     private Button newFolderButton;
 
     private ArrayList<IFolder> list;
-
-    private IFolder activeFolder;
 
     private MultipleSelectionModel<TreeItem<IFolder>> multipleSelectionModel;
 
@@ -58,7 +51,6 @@ public class HomePageController implements Initializable {
         setActionListenerTreeview();
         multipleSelectionModel = contentTreeview.getSelectionModel();
         multipleSelectionModel.select(0);
-        activeFolder = (multipleSelectionModel.getSelectedItem()).getValue();
         contentTreeview.requestFocus();
         getItems(LocalDateToDateConV.convertToDate(datePicker.getValue()));
         newTaskButton.setOnAction(this::handleNewButton);
@@ -66,6 +58,25 @@ public class HomePageController implements Initializable {
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> getItems(LocalDateToDateConV.convertToDate(newValue)));
         Main.getPs().setOnCloseRequest(e->dataSaver.saveToFile(list));
 
+    }
+
+    public ArrayList<IFolder> getAllFolders(){
+        return list;
+    }
+    public IFolder getActiveFolder(){
+      return multipleSelectionModel.getSelectedItem().getValue();
+    }
+
+    public IFolder getRootFolder(){
+        return contentTreeview.getRoot().getValue();
+    }
+
+    public Date getSelectedDate(){
+        return LocalDateToDateConV.convertToDate(datePicker.getValue());
+    }
+
+    public VBox getViewVbox(){
+        return viewVbox;
     }
 
 
@@ -85,7 +96,6 @@ public class HomePageController implements Initializable {
         treeItem = multipleSelectionModel.getSelectedItem();
         if(treeItem != null && treeItem.getValue() != contentTreeview.getRoot().getValue()){
             worklist = taskGetterDate.getTaskByDate(getSelectedFolder(multipleSelectionModel), date);
-            activeFolder = treeItem.getValue();
             viewVbox.getChildren().clear();
             if(!worklist.isEmpty())
                 for(ITask task : worklist){
@@ -177,7 +187,4 @@ public class HomePageController implements Initializable {
         getTreeviewContent();
     }
 
-    public IFolder getActiveFolder() {
-        return activeFolder;
-    }
 }

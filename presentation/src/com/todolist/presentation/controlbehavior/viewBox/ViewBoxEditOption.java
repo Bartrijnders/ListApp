@@ -1,6 +1,5 @@
-package com.todolist.presentation.controlBehavior.viewBox;
+package com.todolist.presentation.controlbehavior.viewBox;
 
-import com.todolist.presentation.alerts.DeleteAlertBox;
 import com.todolist.presentation.components.TaskComponent;
 import com.todolist.presentation.controllers.EditTaskPageController;
 import javafx.fxml.FXMLLoader;

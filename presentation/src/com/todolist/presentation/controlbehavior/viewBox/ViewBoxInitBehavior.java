@@ -1,4 +1,4 @@
-package com.todolist.presentation.controlBehavior.viewBox;
+package com.todolist.presentation.controlbehavior.viewBox;
 
 import com.todolist.presentation.controllers.HomePageController;
 import javafx.scene.layout.VBox;

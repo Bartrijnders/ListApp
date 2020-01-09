@@ -1,16 +1,9 @@
-package com.todolist.presentation.controlBehavior.viewBox;
+package com.todolist.presentation.controlbehavior.viewBox;
 
 import com.todolist.presentation.alerts.DeleteAlertBox;
 import com.todolist.presentation.components.TaskComponent;
 import com.todolist.presentation.controllers.HomePageController;
-import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.layout.VBox;
-
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ViewBoxDeleteOption {
     public void addDeleteTaskOption(VBox vBox, HomePageController homePageController){
